@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model person {
+  person_id     Int             @id @default(autoincrement()) @db.UnsignedSmallInt
+  fname         String          @db.VarChar(20)
+  lname         String          @db.VarChar(20)
+  eye_color     eye_color
+  birth_date    DateTime        @db.Date
+  street        String?         @db.VarChar(30)
+  city          String?         @db.VarChar(20)
+  state         String?         @db.VarChar(20)
+  country       String?         @db.VarChar(20)
+  postal_code   String?         @db.VarChar(20)
+  favorite_food favorite_food[]
+}
+
+enum eye_color {
+  BR
+  BL
+  GR
+}
+
+model favorite_food {
+  person_id Int    @db.UnsignedSmallInt
+  food      String @db.VarChar(20)
+  person    person @relation(fields: [person_id], references: [person_id])
+
+  @@id([person_id, food])
+}
