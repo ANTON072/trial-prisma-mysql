@@ -30,7 +30,7 @@ enum eye_color {
 model favorite_food {
   person_id Int    @db.UnsignedSmallInt
   food      String @db.VarChar(20)
-  person    person @relation(fields: [person_id], references: [person_id])
+  person    person @relation(fields: [person_id], references: [person_id], onDelete: Cascade)
 
   @@id([person_id, food])
 }
